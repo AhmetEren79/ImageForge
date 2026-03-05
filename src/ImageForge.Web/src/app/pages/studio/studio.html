@@ -1,0 +1,194 @@
+<div class="space-y-8">
+    <!-- Header -->
+    <div>
+        <h1 class="text-3xl font-bold">✨ Generation Studio</h1>
+        <p class="text-text-muted mt-1">AI modelleriyle hayal gücünüzü görsele dönüştürün</p>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <!-- Left: Form -->
+        <div class="lg:col-span-2 space-y-6">
+            <div class="card">
+                <!-- Error -->
+                @if (error()) {
+                <div class="bg-danger/10 border border-danger/20 text-danger rounded-xl px-4 py-3 mb-4 text-sm">
+                    {{ error() }}
+                </div>
+                }
+
+                <form (ngSubmit)="submit()" class="space-y-5">
+                    <!-- Model Selection -->
+                    <div>
+                        <label class="block text-sm font-medium text-text-muted mb-3">AI Modeli</label>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                            @for (model of models; track model.value) {
+                            <button type="button" (click)="selectedModel = model.value" [class]="selectedModel === model.value
+                    ? 'border-primary bg-primary/10 ring-1 ring-primary/30'
+                    : 'border-white/10 hover:border-white/20'"
+                                class="flex items-center gap-3 p-4 rounded-xl border transition-all duration-200 text-left">
+                                <span class="text-2xl">{{ model.emoji }}</span>
+                                <div>
+                                    <div class="font-semibold text-sm">{{ model.name }}</div>
+                                    <div class="text-xs text-text-muted">{{ model.desc }}</div>
+                                </div>
+                            </button>
+                            }
+                        </div>
+                    </div>
+
+                    <!-- Prompt -->
+                    <div>
+                        <label class="block text-sm font-medium text-text-muted mb-1.5">Prompt</label>
+                        <textarea [(ngModel)]="promptText" name="promptText" rows="3" class="input-field resize-none"
+                            placeholder="Bir orman içinde yalnız bir ev, gün batımı..."></textarea>
+                    </div>
+
+                    <!-- Negative Prompt -->
+                    <div>
+                        <label class="block text-sm font-medium text-text-muted mb-1.5">Negatif Prompt
+                            (opsiyonel)</label>
+                        <textarea [(ngModel)]="negativePrompt" name="negativePrompt" rows="2"
+                            class="input-field resize-none" placeholder="blurry, low quality, deformed..."></textarea>
+                    </div>
+
+                    <!-- Parameters Grid -->
+                    <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+                        <div>
+                            <label class="block text-xs font-medium text-text-muted mb-1">Görsel Sayısı</label>
+                            <select [(ngModel)]="imageCount" name="imageCount" class="input-field text-sm">
+                                <option [value]="1">1</option>
+                                <option [value]="2">2</option>
+                                <option [value]="3">3</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-medium text-text-muted mb-1">Genişlik</label>
+                            <select [(ngModel)]="width" name="width" class="input-field text-sm">
+                                <option [value]="512">512</option>
+                                <option [value]="768">768</option>
+                                <option [value]="1024">1024</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-medium text-text-muted mb-1">Yükseklik</label>
+                            <select [(ngModel)]="height" name="height" class="input-field text-sm">
+                                <option [value]="512">512</option>
+                                <option [value]="768">768</option>
+                                <option [value]="1024">1024</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-medium text-text-muted mb-1">Adım</label>
+                            <input type="number" [(ngModel)]="steps" name="steps" min="10" max="50"
+                                class="input-field text-sm" />
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-xs font-medium text-text-muted mb-1">CFG Scale</label>
+                            <input type="number" [(ngModel)]="cfgScale" name="cfgScale" min="1" max="20" step="0.5"
+                                class="input-field text-sm" />
+                        </div>
+                        <div>
+                            <label class="block text-xs font-medium text-text-muted mb-1">Seed (opsiyonel)</label>
+                            <input type="number" [(ngModel)]="seed" name="seed" class="input-field text-sm"
+                                placeholder="Rastgele" />
+                        </div>
+                    </div>
+
+                    <!-- Submit -->
+                    <button type="submit" [disabled]="loading()" class="btn-primary w-full text-lg py-3">
+                        @if (loading()) {
+                        <span class="inline-flex items-center gap-2">
+                            <span
+                                class="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin"></span>
+                            Gönderiliyor...
+                        </span>
+                        } @else {
+                        🎯 Görsel Üret
+                        }
+                    </button>
+                </form>
+            </div>
+
+            <!-- Active Generation Status -->
+            @if (activeGeneration(); as gen) {
+            <div class="card">
+                <div class="flex items-center justify-between mb-4">
+                    <h3 class="font-semibold">Üretim Durumu</h3>
+                    <div class="flex items-center gap-2">
+                        <span [class]="getStatusColor(gen.status)" class="text-sm font-medium">
+                            {{ getStatusIcon(gen.status) }} {{ gen.status }}
+                        </span>
+                        @if (gen.status === 'Completed' || gen.status === 'Failed') {
+                        <button (click)="clearGeneration()" class="btn-ghost text-xs">✕</button>
+                        }
+                    </div>
+                </div>
+
+                @if (gen.status === 'Processing' || gen.status === 'Pending') {
+                <div class="flex items-center gap-3 text-text-muted">
+                    <div class="w-6 h-6 border-2 border-primary/30 border-t-primary rounded-full animate-spin"></div>
+                    <span class="text-sm">Görseller üretiliyor, lütfen bekleyin...</span>
+                </div>
+                }
+
+                @if (gen.status === 'Failed') {
+                <div class="bg-danger/10 border border-danger/20 text-danger rounded-xl px-4 py-3 text-sm">
+                    {{ gen.errorMessage || 'Bilinmeyen hata oluştu.' }}
+                </div>
+                }
+
+                @if (gen.images.length > 0) {
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-4">
+                    @for (img of gen.images; track img.id) {
+                    <div class="rounded-xl overflow-hidden border border-white/5 bg-surface-light">
+                        <img [src]="img.storageUrl" [alt]="gen.promptText" class="w-full aspect-square object-cover" />
+                        <div class="p-3 text-xs text-text-muted">
+                            {{ img.width }}×{{ img.height }} · {{ img.fileName }}
+                        </div>
+                    </div>
+                    }
+                </div>
+                }
+            </div>
+            }
+        </div>
+
+        <!-- Right: History -->
+        <div class="space-y-4">
+            <h3 class="font-semibold text-lg">📜 Geçmiş Üretimler</h3>
+            @if (history().length === 0) {
+            <div class="card text-center text-text-muted py-10">
+                <div class="text-3xl mb-2">🖼️</div>
+                <p class="text-sm">Henüz üretim yok</p>
+            </div>
+            }
+            @for (item of history(); track item.promptId) {
+            <div class="card !p-4">
+                <div class="flex items-start justify-between gap-2 mb-2">
+                    <span class="text-xs font-medium truncate flex-1">{{ item.promptText }}</span>
+                    <span [class]="getStatusColor(item.status)" class="text-xs whitespace-nowrap">
+                        {{ getStatusIcon(item.status) }}
+                    </span>
+                </div>
+                <div class="flex items-center gap-2 text-xs text-text-muted">
+                    <span>{{ item.selectedModel }}</span>
+                    <span>·</span>
+                    <span>{{ item.imageCount }} görsel</span>
+                </div>
+                @if (item.images.length > 0) {
+                <div class="flex gap-1 mt-2">
+                    @for (img of item.images; track img.id) {
+                    <div class="w-12 h-12 rounded-lg overflow-hidden border border-white/5">
+                        <img [src]="img.storageUrl" class="w-full h-full object-cover" />
+                    </div>
+                    }
+                </div>
+                }
+            </div>
+            }
+        </div>
+    </div>
+</div>

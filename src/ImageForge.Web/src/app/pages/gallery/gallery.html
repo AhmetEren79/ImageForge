@@ -1,0 +1,181 @@
+<div class="space-y-6">
+    <!-- Header -->
+    <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+        <div>
+            <h1 class="text-3xl font-bold">🖼️ Galeri</h1>
+            <p class="text-text-muted mt-1">Ürettiğiniz tüm görseller burada</p>
+        </div>
+        <button (click)="toggleFavoritesFilter()"
+            [class]="onlyFavorites() ? 'bg-accent/20 text-accent border-accent/30' : 'bg-surface-light text-text-muted border-white/10'"
+            class="flex items-center gap-2 px-4 py-2 rounded-xl border text-sm font-medium transition-all duration-200 hover:scale-105">
+            ❤️ {{ onlyFavorites() ? 'Tümünü Göster' : 'Sadece Favoriler' }}
+        </button>
+    </div>
+
+    <!-- Loading -->
+    @if (loading()) {
+    <div class="flex justify-center py-20">
+        <div class="w-10 h-10 border-3 border-primary/30 border-t-primary rounded-full animate-spin"></div>
+    </div>
+    }
+
+    <!-- Empty State -->
+    @if (!loading() && images().length === 0) {
+    <div class="card text-center py-20">
+        <div class="text-5xl mb-4">🎨</div>
+        <h3 class="text-xl font-semibold mb-2">Henüz görsel yok</h3>
+        <p class="text-text-muted">Studio'ya gidip ilk görselinizi üretin!</p>
+    </div>
+    }
+
+    <!-- Grid -->
+    @if (!loading() && images().length > 0) {
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+        @for (img of images(); track img.id) {
+        <div (click)="openDetail(img.id)" class="group relative rounded-2xl overflow-hidden border border-white/5 bg-surface-light
+                    cursor-pointer transition-all duration-300 hover:scale-[1.02] hover:border-primary/30
+                    hover:shadow-lg hover:shadow-primary/10">
+            <!-- Image -->
+            <div class="aspect-square overflow-hidden">
+                <img [src]="img.storageUrl" [alt]="img.promptText"
+                    class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />
+            </div>
+
+            <!-- Overlay Actions -->
+            <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent
+                      opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                <div class="absolute bottom-0 left-0 right-0 p-3">
+                    <p class="text-white text-xs truncate mb-2">{{ img.promptText }}</p>
+                    <div class="flex items-center gap-1">
+                        <button (click)="toggleFavorite(img.id, $event)"
+                            class="p-1.5 rounded-lg bg-white/10 hover:bg-white/20 transition-colors text-sm">
+                            {{ img.isFavorite ? '❤️' : '🤍' }}
+                        </button>
+                        <button (click)="requestDelete(img.id, $event)"
+                            class="p-1.5 rounded-lg bg-white/10 hover:bg-danger/30 transition-colors text-sm">
+                            🗑️
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Badges -->
+            @if (img.isFavorite) {
+            <div class="absolute top-2 right-2">
+                <span class="px-2 py-0.5 rounded-full bg-accent/80 text-white text-xs">❤️</span>
+            </div>
+            }
+            @if (img.isPublic) {
+            <div class="absolute top-2 left-2">
+                <span class="px-2 py-0.5 rounded-full bg-primary/80 text-white text-xs">🔗</span>
+            </div>
+            }
+        </div>
+        }
+    </div>
+
+    <!-- Pagination -->
+    @if (totalPages() > 1) {
+    <div class="flex items-center justify-center gap-2 pt-4">
+        <button (click)="goToPage(currentPage() - 1)" [disabled]="currentPage() <= 1"
+            class="btn-ghost text-sm disabled:opacity-30">← Önceki</button>
+        @for (p of getPages(); track p) {
+        <button (click)="goToPage(p)"
+            [class]="p === currentPage() ? 'bg-primary text-white' : 'bg-surface-light text-text-muted hover:bg-surface-lighter'"
+            class="w-9 h-9 rounded-lg text-sm font-medium transition-all">
+            {{ p }}
+        </button>
+        }
+        <button (click)="goToPage(currentPage() + 1)" [disabled]="currentPage() >= totalPages()"
+            class="btn-ghost text-sm disabled:opacity-30">Sonraki →</button>
+    </div>
+    }
+    }
+
+    <!-- Detail Modal -->
+    @if (showDetail() && selectedImage(); as img) {
+    <div class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 backdrop-blur-sm"
+        (click)="closeDetail()">
+        <div class="card max-w-4xl w-full max-h-[90vh] overflow-y-auto" (click)="$event.stopPropagation()">
+            <div class="flex items-center justify-between mb-4">
+                <h3 class="text-lg font-semibold">Görsel Detayı</h3>
+                <button (click)="closeDetail()" class="btn-ghost text-lg">✕</button>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- Image Preview -->
+                <div class="rounded-xl overflow-hidden border border-white/5">
+                    <img [src]="img.storageUrl" [alt]="img.promptText" class="w-full" />
+                </div>
+
+                <!-- Details -->
+                <div class="space-y-4">
+                    <div>
+                        <label class="text-xs font-medium text-text-muted">Prompt</label>
+                        <p class="text-sm mt-1">{{ img.promptText }}</p>
+                    </div>
+                    @if (img.negativePrompt) {
+                    <div>
+                        <label class="text-xs font-medium text-text-muted">Negatif Prompt</label>
+                        <p class="text-sm mt-1 text-text-muted">{{ img.negativePrompt }}</p>
+                    </div>
+                    }
+                    <div class="grid grid-cols-2 gap-3 text-sm">
+                        <div><span class="text-text-muted">Model:</span> {{ img.selectedModel }}</div>
+                        <div><span class="text-text-muted">Boyut:</span> {{ img.width }}×{{ img.height }}</div>
+                        <div><span class="text-text-muted">Adım:</span> {{ img.steps }}</div>
+                        <div><span class="text-text-muted">CFG:</span> {{ img.cfgScale }}</div>
+                        @if (img.seed) {
+                        <div><span class="text-text-muted">Seed:</span> {{ img.seed }}</div>
+                        }
+                        <div><span class="text-text-muted">Boyut:</span> {{ (img.fileSizeBytes / 1024).toFixed(0) }} KB
+                        </div>
+                    </div>
+
+                    <!-- Actions -->
+                    <div class="flex flex-wrap gap-2 pt-2">
+                        <button (click)="toggleFavorite(img.id)" class="btn-ghost text-sm">
+                            {{ img.isFavorite ? '❤️ Favoriden Çıkar' : '🤍 Favorile' }}
+                        </button>
+                        <button (click)="toggleShare(img.id)" class="btn-ghost text-sm">
+                            {{ img.isPublic ? '🔒 Paylaşımı Kapat' : '🔗 Paylaş' }}
+                        </button>
+                        <button (click)="download(img.id)" class="btn-ghost text-sm">⬇️ İndir</button>
+                        <button (click)="requestDelete(img.id)" class="btn-ghost text-sm text-danger">🗑️ Sil</button>
+                    </div>
+
+                    @if (img.isPublic && img.publicShareToken) {
+                    <div class="bg-primary/10 border border-primary/20 rounded-xl px-4 py-3 text-sm">
+                        <span class="text-text-muted">Paylaşım linki aktif 🔗</span>
+                    </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+    }
+
+    <!-- Delete Confirmation -->
+    @if (confirmDelete(); as deleteId) {
+    <div class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 backdrop-blur-sm">
+        <div class="card max-w-sm w-full text-center">
+            <div class="text-4xl mb-4">⚠️</div>
+            <h3 class="text-lg font-semibold mb-2">Görseli Sil</h3>
+            <p class="text-text-muted text-sm mb-6">Bu işlem geri alınamaz. Görsel hem depodan hem veritabanından
+                silinecek.</p>
+            <div class="flex gap-3 justify-center">
+                <button (click)="cancelDelete()" class="btn-ghost">İptal</button>
+                <button (click)="executeDelete(deleteId)" class="btn-danger">Sil</button>
+            </div>
+        </div>
+    </div>
+    }
+
+    <!-- Toast -->
+    @if (toast()) {
+    <div class="fixed bottom-6 right-6 z-50 glass rounded-xl px-5 py-3 text-sm font-medium
+                shadow-lg shadow-black/20 animate-[slideUp_0.3s_ease-out]">
+        {{ toast() }}
+    </div>
+    }
+</div>

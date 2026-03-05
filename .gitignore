@@ -1,0 +1,39 @@
+# ─── Environment ───
+.env
+*.env.local
+
+# ─── .NET ───
+**/bin/
+**/obj/
+*.db
+*.db-journal
+*.user
+*.suo
+.vs/
+
+# ─── Node / Angular ───
+**/node_modules/
+**/dist/
+**/.angular/
+
+# ─── Python ───
+__pycache__/
+*.pyc
+*.pyo
+.venv/
+venv/
+
+# ─── AI Models ───
+ai-service/lora_weights/
+*.safetensors
+*.ckpt
+*.pt
+
+# ─── IDE ───
+.idea/
+.vscode/
+*.swp
+
+# ─── OS ───
+Thumbs.db
+.DS_Store

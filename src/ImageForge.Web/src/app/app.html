@@ -1,0 +1,43 @@
+<!-- Navbar -->
+<nav class="glass sticky top-0 z-50 border-b border-white/5">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex items-center justify-between h-16">
+      <!-- Logo -->
+      <a routerLink="/" class="flex items-center gap-2 text-xl font-bold">
+        <span class="text-2xl">🎨</span>
+        <span class="bg-gradient-to-r from-primary-light to-accent bg-clip-text text-transparent">
+          ImageForge
+        </span>
+      </a>
+
+      <!-- Nav Links -->
+      @if (auth.isLoggedIn()) {
+        <div class="flex items-center gap-1">
+          <a routerLink="/studio" routerLinkActive="!text-primary-light !bg-primary/10"
+             class="btn-ghost text-sm">
+            ✨ Studio
+          </a>
+          <a routerLink="/gallery" routerLinkActive="!text-primary-light !bg-primary/10"
+             class="btn-ghost text-sm">
+            🖼️ Gallery
+          </a>
+          <div class="w-px h-6 bg-white/10 mx-2"></div>
+          <span class="text-sm text-text-muted mr-2">{{ auth.currentUser()?.username }}</span>
+          <button (click)="auth.logout()" class="btn-ghost text-sm text-danger">
+            Çıkış
+          </button>
+        </div>
+      } @else {
+        <div class="flex items-center gap-2">
+          <a routerLink="/login" class="btn-ghost text-sm">Giriş</a>
+          <a routerLink="/register" class="btn-primary text-sm !py-2 !px-4">Kayıt Ol</a>
+        </div>
+      }
+    </div>
+  </div>
+</nav>
+
+<!-- Main Content -->
+<main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+  <router-outlet />
+</main>

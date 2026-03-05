@@ -1,0 +1,22 @@
+# ImageForge AI Service — GPU (CUDA) dependencies
+# GPU bulunan makinelerde bu dosyayı kullanın:
+# pip install -r requirements-gpu.txt
+
+# ─── Web Framework ───
+fastapi==0.115.8
+uvicorn[standard]==0.34.0
+python-dotenv==1.1.0
+httpx==0.28.1
+pydantic==2.11.2
+pydantic-settings==2.9.1
+
+# ─── Storage ───
+boto3==1.38.16
+Pillow==11.2.1
+
+# ─── AI / ML (CUDA GPU) ───
+torch==2.7.1
+diffusers==0.33.1
+transformers==4.52.4
+accelerate==1.7.0
+safetensors==0.5.3

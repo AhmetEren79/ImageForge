@@ -1,0 +1,91 @@
+# docker-compose.yml — ImageForge tüm servislerin orkestrasyon dosyası.
+# Tek komutla tüm servisleri ayağa kaldırır: docker compose up --build
+#
+# Servisler:
+#   api:        .NET 10 Backend API     → port 5000
+#   frontend:   Angular + Nginx         → port 4200
+#   ai-service: Python FastAPI AI       → port 8000
+
+services:
+  # ─────────────────────────────────────────────
+  # .NET 10 Backend API
+  # ─────────────────────────────────────────────
+  api:
+    build:
+      context: .
+      dockerfile: src/ImageForge.Api/Dockerfile
+    container_name: imageforge-api
+    ports:
+      - "5000:5000"
+    env_file:
+      - .env
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://+:5000
+      - DatabaseProvider=sqlite
+      - ConnectionStrings__SQLite=Data Source=/app/data/imageforge.db
+      - Jwt__Secret=${JWT_SECRET:-SuperSecretKeyForDevelopment12345!}
+      - Jwt__Issuer=ImageForge
+      - Jwt__Audience=ImageForge
+      - AiService__BaseUrl=http://ai-service:8000
+      - AiService__CallbackBaseUrl=http://api:5000
+    volumes:
+      - api-data:/app/data
+    networks:
+      - imageforge-network
+    restart: unless-stopped
+    healthcheck:
+      test: [ "CMD-SHELL", "curl -f http://localhost:5000/swagger/v1/swagger.json || exit 1" ]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 15s
+
+  # ─────────────────────────────────────────────
+  # Angular Frontend (nginx reverse proxy)
+  # ─────────────────────────────────────────────
+  frontend:
+    build:
+      context: ./src/ImageForge.Web
+      dockerfile: Dockerfile
+    container_name: imageforge-frontend
+    ports:
+      - "4200:80"
+    depends_on:
+      api:
+        condition: service_started
+    networks:
+      - imageforge-network
+    restart: unless-stopped
+
+  # ─────────────────────────────────────────────
+  # Python FastAPI AI Servisi
+  # ─────────────────────────────────────────────
+  ai-service:
+    build:
+      context: ./ai-service
+      dockerfile: Dockerfile
+    container_name: imageforge-ai
+    ports:
+      - "8000:8000"
+    env_file:
+      - .env
+    environment:
+      - CALLBACK_BASE_URL=http://api:5000
+      - LORA_DIR=/app/lora_weights
+    volumes:
+      - ./ai-service/lora_weights:/app/lora_weights
+    depends_on:
+      api:
+        condition: service_started
+    networks:
+      - imageforge-network
+    restart: unless-stopped
+
+volumes:
+  api-data:
+    driver: local
+
+networks:
+  imageforge-network:
+    driver: bridge

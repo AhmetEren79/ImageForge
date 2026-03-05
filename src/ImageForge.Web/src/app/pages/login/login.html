@@ -1,0 +1,50 @@
+<div class="min-h-[70vh] flex items-center justify-center">
+    <div class="card w-full max-w-md">
+        <!-- Header -->
+        <div class="text-center mb-8">
+            <div class="text-4xl mb-3">🎨</div>
+            <h1 class="text-2xl font-bold bg-gradient-to-r from-primary-light to-accent bg-clip-text text-transparent">
+                ImageForge'a Giriş
+            </h1>
+            <p class="text-text-muted text-sm mt-2">AI ile hayal gücünüzü gerçeğe dönüştürün</p>
+        </div>
+
+        <!-- Error -->
+        @if (error()) {
+        <div class="bg-danger/10 border border-danger/20 text-danger rounded-xl px-4 py-3 mb-4 text-sm">
+            {{ error() }}
+        </div>
+        }
+
+        <!-- Form -->
+        <form (ngSubmit)="submit()" class="space-y-4">
+            <div>
+                <label class="block text-sm font-medium text-text-muted mb-1.5">E-posta veya Kullanıcı Adı</label>
+                <input type="text" [(ngModel)]="emailOrUsername" name="emailOrUsername" class="input-field"
+                    placeholder="email@ornek.com" autocomplete="username" />
+            </div>
+
+            <div>
+                <label class="block text-sm font-medium text-text-muted mb-1.5">Şifre</label>
+                <input type="password" [(ngModel)]="password" name="password" class="input-field" placeholder="••••••••"
+                    autocomplete="current-password" />
+            </div>
+
+            <button type="submit" [disabled]="loading()" class="btn-primary w-full">
+                @if (loading()) {
+                <span class="inline-flex items-center gap-2">
+                    <span class="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin"></span>
+                    Giriş yapılıyor...
+                </span>
+                } @else {
+                Giriş Yap
+                }
+            </button>
+        </form>
+
+        <p class="text-center text-text-muted text-sm mt-6">
+            Hesabınız yok mu?
+            <a routerLink="/register" class="text-primary-light hover:text-primary font-medium">Kayıt olun</a>
+        </p>
+    </div>
+</div>

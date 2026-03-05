@@ -1,0 +1,8 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/ImageForge.Api/ImageForge.Api.csproj" />
+    <Project Path="src/ImageForge.Application/ImageForge.Application.csproj" />
+    <Project Path="src/ImageForge.Domain/ImageForge.Domain.csproj" />
+    <Project Path="src/ImageForge.Infrastructure/ImageForge.Infrastructure.csproj" />
+  </Folder>
+</Solution>
