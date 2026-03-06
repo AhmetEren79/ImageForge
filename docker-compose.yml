@@ -28,7 +28,7 @@ services:
       - Jwt__Issuer=ImageForge
       - Jwt__Audience=ImageForge
       - AiService__BaseUrl=http://ai-service:8000
-      - AiService__CallbackBaseUrl=http://api:5000
+      - AiService__CallbackBaseUrl=${AI_SERVICE_CALLBACK_URL:-http://localhost:5265}
     volumes:
       - api-data:/app/data
     networks:

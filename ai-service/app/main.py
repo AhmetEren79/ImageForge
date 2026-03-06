@@ -93,8 +93,15 @@ async def generate(request: GenerateRequest, background_tasks: BackgroundTasks):
                    f"Desteklenen: DiscoElysium, SlayThePrincess"
         )
 
-    # Arka planda işle
-    background_tasks.add_task(process_generation, request)
+    # Arka planda işle (Modal veya Yerel)
+    import os
+    if os.getenv("MODAL_TOKEN_ID"):
+        import modal
+        logger.info("Modal backend kullanılıyor: imageforge-ai-service -> process_generation_modal")
+        f = modal.Function.from_name("imageforge-ai-service", "process_generation_modal")
+        f.spawn(request.model_dump())
+    else:
+        background_tasks.add_task(process_generation, request)
 
     return {"status": "accepted", "prompt_id": request.prompt_id}
 

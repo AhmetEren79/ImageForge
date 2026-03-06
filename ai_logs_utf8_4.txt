@@ -1,0 +1,90 @@
+﻿imageforge-ai  | INFO:     Started server process [1]
+imageforge-ai  | INFO:     Waiting for application startup.
+imageforge-ai  | 2026-03-05 06:34:20,359 [INFO] app.main: AI servisi ba┼şlat─▒l─▒yor...
+imageforge-ai  | 2026-03-05 06:34:22,474 [INFO] app.main: GPU mevcut: False
+imageforge-ai  | 2026-03-05 06:34:22,475 [INFO] app.main: R2 Bucket: imageforge-dev
+imageforge-ai  | 2026-03-05 06:34:22,475 [INFO] app.main: R2 Endpoint: https://320843f395214496f89171d37b985f3f.r2.cloudflarestorage.com
+imageforge-ai  | 2026-03-05 06:34:22,475 [INFO] app.main: Base model: stabilityai/stable-diffusion-xl-base-1.0
+imageforge-ai  | 2026-03-05 06:34:22,475 [INFO] app.main: Model ilk ├╝retim iste─şinde lazy-load edilecek.
+imageforge-ai  | INFO:     Application startup complete.
+imageforge-ai  | INFO:     Uvicorn running on http://0.0.0.0:8000 (Press CTRL+C to quit)
+imageforge-ai  | INFO:     127.0.0.1:53696 - "GET /health HTTP/1.1" 200 OK
+imageforge-ai  | INFO:     127.0.0.1:44062 - "GET /health HTTP/1.1" 200 OK
+imageforge-ai  | INFO:     127.0.0.1:38744 - "GET /health HTTP/1.1" 200 OK
+imageforge-ai  | INFO:     127.0.0.1:50350 - "GET /health HTTP/1.1" 200 OK
+imageforge-ai  | INFO:     127.0.0.1:51240 - "GET /health HTTP/1.1" 200 OK
+imageforge-ai  | INFO:     127.0.0.1:51180 - "GET /health HTTP/1.1" 200 OK
+imageforge-ai  | INFO:     127.0.0.1:35710 - "GET /health HTTP/1.1" 200 OK
+imageforge-ai  | INFO:     127.0.0.1:52996 - "GET /health HTTP/1.1" 200 OK
+imageforge-ai  | INFO:     127.0.0.1:51018 - "GET /health HTTP/1.1" 200 OK
+imageforge-ai  | INFO:     127.0.0.1:35818 - "GET /health HTTP/1.1" 200 OK
+imageforge-ai  | INFO:     127.0.0.1:55730 - "GET /health HTTP/1.1" 200 OK
+imageforge-ai  | INFO:     127.0.0.1:57152 - "GET /health HTTP/1.1" 200 OK
+imageforge-ai  | INFO:     127.0.0.1:47540 - "GET /health HTTP/1.1" 200 OK
+imageforge-ai  | INFO:     127.0.0.1:37982 - "GET /health HTTP/1.1" 200 OK
+imageforge-ai  | INFO:     127.0.0.1:53892 - "GET /health HTTP/1.1" 200 OK
+imageforge-ai  | INFO:     127.0.0.1:37440 - "GET /health HTTP/1.1" 200 OK
+imageforge-ai  | INFO:     127.0.0.1:56536 - "GET /health HTTP/1.1" 200 OK
+imageforge-ai  | INFO:     127.0.0.1:43476 - "GET /health HTTP/1.1" 200 OK
+imageforge-ai  | INFO:     127.0.0.1:50396 - "GET /health HTTP/1.1" 200 OK
+imageforge-ai  | INFO:     172.19.0.1:52110 - "GET /health HTTP/1.1" 200 OK
+imageforge-ai  | INFO:     127.0.0.1:57186 - "GET /health HTTP/1.1" 200 OK
+imageforge-ai  | INFO:     127.0.0.1:54684 - "GET /health HTTP/1.1" 200 OK
+imageforge-ai  | INFO:     127.0.0.1:43196 - "GET /health HTTP/1.1" 200 OK
+imageforge-ai  | INFO:     127.0.0.1:50708 - "GET /health HTTP/1.1" 200 OK
+imageforge-ai  | INFO:     127.0.0.1:56984 - "GET /health HTTP/1.1" 200 OK
+imageforge-ai  | INFO:     127.0.0.1:42628 - "GET /health HTTP/1.1" 200 OK
+imageforge-ai  | INFO:     127.0.0.1:37960 - "GET /health HTTP/1.1" 200 OK
+imageforge-ai  | INFO:     127.0.0.1:57882 - "GET /health HTTP/1.1" 200 OK
+imageforge-ai  | INFO:     127.0.0.1:34090 - "GET /health HTTP/1.1" 200 OK
+imageforge-ai  | INFO:     127.0.0.1:41780 - "GET /health HTTP/1.1" 200 OK
+imageforge-ai  | INFO:     127.0.0.1:37842 - "GET /health HTTP/1.1" 200 OK
+imageforge-ai  | INFO:     127.0.0.1:58616 - "GET /health HTTP/1.1" 200 OK
+imageforge-ai  | INFO:     127.0.0.1:45562 - "GET /health HTTP/1.1" 200 OK
+imageforge-ai  | INFO:     127.0.0.1:50002 - "GET /health HTTP/1.1" 200 OK
+imageforge-ai  | INFO:     127.0.0.1:49506 - "GET /health HTTP/1.1" 200 OK
+imageforge-ai  | INFO:     127.0.0.1:59546 - "GET /health HTTP/1.1" 200 OK
+imageforge-ai  | INFO:     127.0.0.1:48500 - "GET /health HTTP/1.1" 200 OK
+imageforge-ai  | INFO:     127.0.0.1:36388 - "GET /health HTTP/1.1" 200 OK
+imageforge-ai  | INFO:     127.0.0.1:44122 - "GET /health HTTP/1.1" 200 OK
+imageforge-ai  | INFO:     127.0.0.1:57658 - "GET /health HTTP/1.1" 200 OK
+imageforge-ai  | INFO:     127.0.0.1:43764 - "GET /health HTTP/1.1" 200 OK
+imageforge-ai  | INFO:     127.0.0.1:46230 - "GET /health HTTP/1.1" 200 OK
+imageforge-ai  | INFO:     127.0.0.1:48256 - "GET /health HTTP/1.1" 200 OK
+imageforge-ai  | INFO:     127.0.0.1:46824 - "GET /health HTTP/1.1" 200 OK
+imageforge-ai  | INFO:     127.0.0.1:41868 - "GET /health HTTP/1.1" 200 OK
+imageforge-ai  | INFO:     127.0.0.1:57146 - "GET /health HTTP/1.1" 200 OK
+imageforge-ai  | INFO:     127.0.0.1:60452 - "GET /health HTTP/1.1" 200 OK
+imageforge-ai  | INFO:     127.0.0.1:41442 - "GET /health HTTP/1.1" 200 OK
+imageforge-ai  | INFO:     127.0.0.1:55196 - "GET /health HTTP/1.1" 200 OK
+imageforge-ai  | INFO:     127.0.0.1:47756 - "GET /health HTTP/1.1" 200 OK
+imageforge-ai  | 2026-03-05 06:58:59,146 [INFO] app.main: ├£retim iste─şi al─▒nd─▒ ÔÇö PromptId: 622a9a8c-4bae-41f6-80e8-9855ef66d319, Model: DiscoElysium, ImageCount: 2
+imageforge-ai  | INFO:     172.19.0.2:44290 - "POST /api/generate HTTP/1.1" 200 OK
+imageforge-ai  | 2026-03-05 06:58:59,153 [INFO] app.main: ├£retim ba┼şl─▒yor ÔÇö PromptId: 622a9a8c-4bae-41f6-80e8-9855ef66d319
+imageforge-ai  | 2026-03-05 06:58:59,157 [INFO] app.pipeline: SDXL base model y├╝kleniyor: stabilityai/stable-diffusion-xl-base-1.0
+imageforge-ai  | 
+Fetching 19 files:   0%|          | 0/19 [00:00<?, ?it/s]
+Fetching 19 files:  11%|Ôûê         | 2/19 [00:00<00:04,  3.82it/s]
+Fetching 19 files:  21%|ÔûêÔûê        | 4/19 [07:44<34:07, 136.51s/it]
+Fetching 19 files:  32%|ÔûêÔûêÔûêÔûÅ      | 6/19 [19:44<51:40, 238.52s/it]INFO:     Started server process [1]
+imageforge-ai  | INFO:     Waiting for application startup.
+imageforge-ai  | 2026-03-05 07:25:16,731 [INFO] app.main: AI servisi ba┼şlat─▒l─▒yor...
+imageforge-ai  | 2026-03-05 07:25:20,795 [INFO] app.main: GPU mevcut: False
+imageforge-ai  | 2026-03-05 07:25:20,795 [INFO] app.main: R2 Bucket: imageforge-dev
+imageforge-ai  | 2026-03-05 07:25:20,795 [INFO] app.main: R2 Endpoint: https://320843f395214496f89171d37b985f3f.r2.cloudflarestorage.com
+imageforge-ai  | 2026-03-05 07:25:20,795 [INFO] app.main: Base model: stabilityai/stable-diffusion-xl-base-1.0
+imageforge-ai  | 2026-03-05 07:25:20,795 [INFO] app.main: Model ilk ├╝retim iste─şinde lazy-load edilecek.
+imageforge-ai  | INFO:     Application startup complete.
+imageforge-ai  | INFO:     Uvicorn running on http://0.0.0.0:8000 (Press CTRL+C to quit)
+imageforge-ai  | INFO:     127.0.0.1:40044 - "GET /health HTTP/1.1" 200 OK
+imageforge-ai  | INFO:     127.0.0.1:37348 - "GET /health HTTP/1.1" 200 OK
+imageforge-ai  | INFO:     127.0.0.1:44328 - "GET /health HTTP/1.1" 200 OK
+imageforge-ai  | INFO:     127.0.0.1:52604 - "GET /health HTTP/1.1" 200 OK
+imageforge-ai  | INFO:     127.0.0.1:33668 - "GET /health HTTP/1.1" 200 OK
+imageforge-ai  | INFO:     127.0.0.1:41484 - "GET /health HTTP/1.1" 200 OK
+imageforge-ai  | INFO:     127.0.0.1:35686 - "GET /health HTTP/1.1" 200 OK
+imageforge-ai  | INFO:     127.0.0.1:60180 - "GET /health HTTP/1.1" 200 OK
+imageforge-ai  | 2026-03-05 07:29:30,895 [INFO] app.main: ├£retim iste─şi al─▒nd─▒ ÔÇö PromptId: 29141287-097b-4391-8c59-245a5d30353c, Model: DiscoElysium, ImageCount: 2
+imageforge-ai  | INFO:     172.19.0.2:44134 - "POST /api/generate HTTP/1.1" 200 OK
+imageforge-ai  | 2026-03-05 07:29:30,896 [INFO] app.main: ├£retim ba┼şl─▒yor ÔÇö PromptId: 29141287-097b-4391-8c59-245a5d30353c
+imageforge-ai  | 2026-03-05 07:29:30,896 [INFO] app.pipeline: SDXL base model y├╝kleniyor: stabilityai/stable-diffusion-xl-base-1.0

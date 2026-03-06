@@ -1,0 +1,1 @@
+[   18897ms] [ERROR] Failed to load resource: the server responded with a status of 409 (Conflict) @ http://localhost:4200/api/auth/register:0
